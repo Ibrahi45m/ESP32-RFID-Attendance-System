@@ -1,0 +1,5 @@
+# Python 3.10+; baseline dependencies used by the app and RFID worker.
+streamlit>=1.50
+pandas>=2.0
+plotly>=5.18
+pyserial>=3.5
