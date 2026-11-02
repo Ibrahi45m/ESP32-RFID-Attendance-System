@@ -210,4 +210,4 @@ Potential improvements: physical green/white LEDs, a buzzer, hardware enclosure,
 
 ## License
 
-No license has been selected yet. Add an appropriate `LICENSE` file **only after choosing** the terms you want for public reuse.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
