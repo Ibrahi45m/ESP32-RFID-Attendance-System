@@ -80,8 +80,8 @@ An RFID-based attendance tracking prototype that combines an **ESP32 + MFRC522 (
 ### 1. Clone or download
 
 ```powershell
-git clone <YOUR-REPOSITORY-URL>
-cd <YOUR-REPOSITORY-FOLDER>
+git clone https://github.com/Ibrahi45m/ESP32-RFID-Attendance-System.git
+cd ESP32-RFID-Attendance-System
 ```
 
 If you downloaded a ZIP instead, extract it and open a terminal in the extracted folder.
