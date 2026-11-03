@@ -16,6 +16,22 @@ An RFID-based attendance tracking prototype that combines an **ESP32 + MFRC522 (
 - **SQLite persistence:** attendance and schedule data remain local to the installation.
 - **Automated tests:** a hardware-independent Python test suite.
 
+## Screenshots and hardware
+
+### Dashboard
+![Dashboard with demo data](screenshots/01_accueil_demo.png)
+
+### Individual attendance report
+![Individual report with demo data](screenshots/02_rapport_individuel_demo.png)
+
+> The dashboard and report screenshots use fictional students and simulated attendance records created in an isolated test database. These records were not collected through RFID scans.
+
+### Hardware setup
+![ESP32 and RC522 prototype wiring](screenshots/03_hardware_setup.jpg)
+
+ESP32 connected to the RC522 reader through a breadboard.
+Attendance feedback LEDs are currently simulated through the serial protocol; physical green/white LEDs are not installed.
+
 ## Architecture
 
 ```text
@@ -80,8 +96,8 @@ An RFID-based attendance tracking prototype that combines an **ESP32 + MFRC522 (
 ### 1. Clone or download
 
 ```powershell
-git clone <YOUR-REPOSITORY-URL>
-cd <YOUR-REPOSITORY-FOLDER>
+git clone https://github.com/Ibrahi45m/ESP32-RFID-Attendance-System.git
+cd ESP32-RFID-Attendance-System
 ```
 
 If you downloaded a ZIP instead, extract it and open a terminal in the extracted folder.
