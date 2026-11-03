@@ -32,3 +32,4 @@ TEST_MIGRATION_RFID/
 .vscode/
 .idea/
 *.zip
+/RFID_Attendance_ESP32_LED_PHYSICAL/

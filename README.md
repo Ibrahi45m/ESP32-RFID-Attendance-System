@@ -2,7 +2,7 @@
 
 An RFID-based attendance tracking prototype that combines an **ESP32 + MFRC522 (RC522)** reader with a **Python/SQLite backend** and a **Streamlit dashboard**. It automatically records attendance during scheduled class windows, applies group eligibility rules, and provides immediate serial feedback.
 
-> **Status:** Tested MVP / portfolio prototype. Automatic scanning and group validation were tested with real hardware. The green/white LED indicators are **simulated through the serial protocol**; physical LEDs have not yet been installed. This is not a production-grade, multi-user access-control system.
+> **Status:** Tested MVP / portfolio prototype. Automatic scanning and group validation were tested with real hardware. Physical green and red LEDs are implemented and tested. Serial acknowledgments remain available for debugging. This is not a production-grade, multi-user access-control system.
 
 ## Features
 
@@ -65,7 +65,7 @@ An RFID-based attendance tracking prototype that combines an **ESP32 + MFRC522 (
 | 3.3V | 3V3 |
 | GND | GND |
 
-**Power the MFRC522 from 3.3 V, not 5 V.** Physical green/white LEDs are an optional future hardware extension and are not connected in this version.
+**Power the MFRC522 from 3.3 V, not 5 V.** The physical firmware supports a green LED on GPIO 25 and a red LED on GPIO 26.
 
 ## Software requirements
 
@@ -137,7 +137,7 @@ set "RFID_PORT=COM7"
 
 Change `COM7` to your actual ESP32 port. The worker stays running between cards and sessions; **no click is needed for each scan**. Keep the computer awake and the worker terminal open. Use `Ctrl+C` to stop it. Do not run multiple workers against the same reader.
 
-During a valid attendance window, a newly accepted card receives a green-feedback command. Out-of-group cards, duplicates, unknown cards and scans outside an allowed window receive white feedback. The firmware prints the simulated acknowledgment; **it does not drive physical LEDs yet**.
+During a valid attendance window, a newly accepted card receives a green-feedback command. Out-of-group cards, duplicates, unknown cards and scans outside an allowed window receive white feedback. The firmware prints the simulated acknowledgment; **the physical firmware also drives the green and red LEDs**.
 
 ## Attendance window examples
 
@@ -199,7 +199,7 @@ Additional support modules and the legacy dashboard are included in the reposito
 - Use only fictional/demo data in screenshots or videos.
 - Card UID matching is **not secure authentication**: basic RFID identifiers can be copied. This project is a teaching/portfolio attendance prototype, not a security system.
 - The worker requires a connected and powered ESP32, an awake computer, and the correct serial port.
-- The current LED interface is **serial simulation**; physical LEDs require additional wiring and firmware support.
+- Physical LED feedback is implemented using GPIO 25 and GPIO 26.
 - This is a local SQLite application without authentication/roles, centralized multi-computer synchronization or production-grade monitoring.
 
 ## Demo and future improvements
@@ -207,6 +207,50 @@ Additional support modules and the legacy dashboard are included in the reposito
 A demonstration can show: (1) automatic card registration during a class, (2) rejection of a card outside its assigned group, (3) duplicate-scan prevention, (4) automatic transition to the next session, and (5) Streamlit reports. Replace this paragraph with a link to a demo video once one is ready.
 
 Potential improvements: physical green/white LEDs, a buzzer, hardware enclosure, authenticated administration, backups, improved device reconnection and deployment packaging.
+
+## Project Screenshots
+
+The following screenshots use fictional demo data.
+
+### Dashboard
+
+![RFID Attendance Dashboard](screenshots/01_accueil_demo.png)
+
+### Individual Attendance Report
+
+![Individual Attendance Report](screenshots/02_rapport_individuel_demo.png)
+
+### Hardware Prototype
+
+![ESP32 RC522 with Physical LEDs](screenshots/03_hardware_setup.jpg)
+
+## Physical LED Feedback
+
+The system includes two physical LEDs connected to the ESP32.
+
+| Component | ESP32 GPIO | Function |
+|---|---|---|
+| Green LED | GPIO 25 | Attendance successfully registered |
+| Red LED | GPIO 26 | Attendance rejected or already recorded |
+
+Each LED uses a current-limiting resistor.
+
+Python validates the attendance using SQLite and sends
+`LED:GREEN` or `LED:WHITE` through USB Serial.
+
+The ESP32 activates the appropriate physical LED
+for 800 milliseconds.
+
+The `LED:WHITE` command is retained for compatibility
+with the existing Python worker, but activates the red LED.
+
+### Firmware
+
+- `RFID_Attendance_ESP32_LED_TEST.ino`: Serial LED simulation
+- `RFID_Attendance_ESP32_LED_PHYSICAL.ino`: Physical LEDs
+
+The physical LED version has been tested with
+the RFID reader and automatic attendance worker.
 
 ## License
 
